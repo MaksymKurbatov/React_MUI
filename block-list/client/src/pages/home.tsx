@@ -1,7 +1,5 @@
 import Image from 'next/image'
 import {Inter} from 'next/font/google'
-import {useEffect} from "react";
-import {authControllerGetSessionInfo, authControllerSignIn} from "@/shared/api/generated";
 import {useQuery} from "@tanstack/react-query";
 import {UiButton} from "@/shared/ui/ui-button";
 import {UiTextField} from "@/shared/ui/ui-text-field";
@@ -12,7 +10,9 @@ import {UiPageSpinner} from "@/shared/ui/ui-page-spiner";
 import {UiLogo} from "@/shared/ui/ui-logo";
 import {UiHeader} from "@/shared/ui/ui-header";
 import {SignOutButton} from "@/features";
-import {useSessionQuery} from "@/entities/session/index,";
+import {useSessionQuery} from "@/entities/session";
+import {ToggleBlockingButton} from "@/features/toggle-blocking/ui/toggle-blocking-button";
+import {Profile} from "@/widgets/profile";
 
 const inter = Inter({subsets: ['latin']})
 
@@ -33,12 +33,19 @@ export default function HomePage() {
 
     return (
         <main
-            className={`min-h-screen flex-col `}
+            className={`min-h-screen flex flex-col `}
         >
             <UiHeader right={<div className={"m-2"}>
-                {data?.email}
-                <SignOutButton/>
+               <Profile/>
             </div>}/>
+            <div className="grid grid-cols-[200px_1fr]">
+                <aside className="px-5 pt-5">
+                    <ToggleBlockingButton/>
+                </aside>
+                <main>
+                    Block List
+                </main>
+            </div>
             <div className="flex flex-col items-center justify-center space-y-4 w-full">
                 {data?.email && (
                     <div className="border border-green-700 p-2">
@@ -46,7 +53,7 @@ export default function HomePage() {
                     </div>
                 )}
                 {/* UiButton centered both horizontally and vertically */}
-                <UiButton variant="primary">PRIMARY</UiButton>
+                <UiButton variant="primary" label="PRIMARY"></UiButton>
                 <UiButton variant="secondary">SECONDARY</UiButton>
                 <UiButton variant="outlined">OUTLINED</UiButton>
                 <UiButton disabled variant="primary">OUTLINED</UiButton>
