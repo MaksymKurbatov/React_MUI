@@ -11,6 +11,8 @@ import {UiSpinner} from "@/shared/ui/ui-spinner";
 import {UiPageSpinner} from "@/shared/ui/ui-page-spiner";
 import {UiLogo} from "@/shared/ui/ui-logo";
 import {UiHeader} from "@/shared/ui/ui-header";
+import {SignOutButton} from "@/features";
+import {useSessionQuery} from "@/entities/session/index,";
 
 const inter = Inter({subsets: ['latin']})
 
@@ -21,17 +23,22 @@ export default function HomePage() {
          authControllerSignIn({email: "test@gmail.com", password: "1234"}).then(console.log);
      }, [])*/
 
-    //reactquery call example
+    /* react-query useQuery call example
     const {data} = useQuery({
-        queryKey: ['session'],
-        queryFn: () => authControllerGetSessionInfo()
-    })
+         queryKey: ['session'],
+         queryFn: () => authControllerGetSessionInfo()
+     })*/
+
+    const {data} = useSessionQuery()
 
     return (
         <main
             className={`min-h-screen flex-col `}
         >
-            <UiHeader right={<div className={"m-2"}> {data?.email} </div>}/>
+            <UiHeader right={<div className={"m-2"}>
+                {data?.email}
+                <SignOutButton/>
+            </div>}/>
             <div className="flex flex-col items-center justify-center space-y-4 w-full">
                 {data?.email && (
                     <div className="border border-green-700 p-2">
