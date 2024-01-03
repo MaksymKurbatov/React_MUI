@@ -13,6 +13,8 @@ import {SignOutButton} from "@/features";
 import {useSessionQuery} from "@/entities/session";
 import {ToggleBlockingButton} from "@/features/toggle-blocking/ui/toggle-blocking-button";
 import {Profile} from "@/widgets/profile";
+import {useBlockListQuery} from "@/entities/block-lisst/queries";
+import {AddBlockItemForm, BlockList} from "@/features/block-list/insex";
 
 const inter = Inter({subsets: ['latin']})
 
@@ -29,30 +31,33 @@ export default function HomePage() {
          queryFn: () => authControllerGetSessionInfo()
      })*/
 
-    const {data} = useSessionQuery()
-
+    //const {data} = useSessionQuery()
+    const {data} = useBlockListQuery({});
     return (
         <main
             className={`min-h-screen flex flex-col `}
         >
             <UiHeader right={<div className={"m-2"}>
-               <Profile/>
+                <Profile/>
             </div>}/>
-            <div className="grid grid-cols-[200px_1fr]">
-                <aside className="px-5 pt-5">
+            <div className='pt-10 px-5'>
+                <h1 className='text-2xl mb-8'>Block List</h1>
+                <AddBlockItemForm/>
+               <BlockList className="mt-7"/>
+            </div>
+            <div className="grid grid-cols-[200px_1fr] py-3 items-center">
+                <aside className="px-5">
                     <ToggleBlockingButton/>
                 </aside>
-                <main>
-                    Block List
-                </main>
             </div>
             <div className="flex flex-col items-center justify-center space-y-4 w-full">
-                {data?.email && (
+                {/*
+             {data?.email && (
                     <div className="border border-green-700 p-2">
                         {data.email}
                     </div>
                 )}
-                {/* UiButton centered both horizontally and vertically */}
+            */}
                 <UiButton variant="primary" label="PRIMARY"></UiButton>
                 <UiButton variant="secondary">SECONDARY</UiButton>
                 <UiButton variant="outlined">OUTLINED</UiButton>
@@ -69,6 +74,7 @@ export default function HomePage() {
                 <UiSpinner className={"text-teal-900 w-10 h-10"}/>
                 <UiLogo/>
             </div>
+
         </main>
     )
 }
